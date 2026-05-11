@@ -1,0 +1,29 @@
+{
+    "usuario": {
+      "id": 101,
+      "nombre": "Andrés Pérez",
+      "correo": "andres@email.com",
+      "activo": true,
+      "roles": [
+        "admin",
+        "editor"
+      ]
+    },
+    "configuracion": {
+      "tema": "oscuro",
+      "idioma": "es",
+      "notificaciones": true
+    },
+    "proyectos": [
+      {
+        "id": "P-001",
+        "nombre": "Tienda Online",
+        "estado": "en progreso"
+      },
+      {
+        "id": "P-002",
+        "nombre": "App Móvil",
+        "estado": "finalizado"
+      }
+    ]
+  }

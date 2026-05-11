@@ -1,0 +1,72 @@
+<mi-contador valor="0"></mi-contador>
+lass MiContador extends HTMLElement {
+
+    // Se crea el componente
+    constructor() {
+    //Eso llama al constructor de HTMLElement
+    super();
+    //encapsular estructura y estilos del componente
+    //aislándolos del resto del documento
+    //Con open se accede desde JS
+    this.attachShadow({ mode: 'open' });
+    this.valor = 0;
+  }
+
+  //vigilar cambios en el atributo valor en HTML
+  //con static El navegador consulta la clase
+  //saber qué atributos observar.
+  static get observedAttributes() {
+    return ['valor'];
+  }
+  //cuando el componente entra al DOM o carga el HTML 
+  //O activa el constructor
+  connectedCallback() {
+    console.log("Componente agregado");
+
+    //renderizas HTML
+    this.render();
+  }
+
+  //cuando lo quitan del DOM
+  //Elimino el HTML con metodos remove o inner
+  disconnectedCallback() {
+    console.log("Componente eliminado");
+
+    //limpias eventos
+    this.shadowRoot.querySelector('button')
+      .removeEventListener('click', this.incrementar);
+  }
+
+  //cuando cambia un atributo HTML o se hace click
+  //Ejecuta esto
+  //Observa con observedAttributes automaticamente
+  attributeChangedCallback(name, oldValue, newValue) {
+    console.log(${name}: ${oldValue} → ${newValue});
+    //Llegan como string
+    this.valor = parseInt(newValue);
+    this.render();
+  }
+
+  incrementar = () => {
+    this.valor++;
+    this.setAttribute('valor', this.valor);
+  }
+
+  //Renderizo boton y texto
+  render() {
+  this.shadowRoot.innerHTML = 
+    <p>Valor: ${this.valor}</p>
+    <button>Sumar</button>
+  ;
+
+  //Renderiza boton 
+    //Click → cambia atributo valor
+    //Busca el boton en la parte del render
+    //Si hace click, incrementa
+  this.shadowRoot.querySelector('button')
+    .addEventListener('click', this.incrementar);
+}
+}
+
+//Nombre de la etiqueta y el nombre de la clase
+customElements.define('mi-contador', MiContador);
